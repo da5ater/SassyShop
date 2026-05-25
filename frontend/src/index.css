@@ -29,4 +29,16 @@ code {
 
 
 
+/* Enable smooth transitions using Bootstrap's default timing */
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+.transition-transform {
+  transition: transform 0.3s ease-in-out;
+}
 
+/* Card lift and deeper shadow on hover */
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; /* Boosts shadow-sm to shadow */
+}

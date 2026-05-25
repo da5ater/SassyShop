@@ -1,12 +1,24 @@
 import React from 'react'
-import products from '../products'
 import { Link, useParams } from 'react-router-dom'
 import { Card, Col, ListGroup, Row  } from 'react-bootstrap'
+import { useEffect ,useState} from 'react'
+import axios from 'axios'
+
 
 
 const ProductScreen = () => {
   const { id } = useParams()
-  const product = products.find((p) => p._id === id)
+  const [product, setProduct] = useState({})
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${id}`)
+      setProduct(data)
+    }
+
+    fetchProduct()
+  }, [id])
+
 
   return (
     <>
@@ -31,7 +43,7 @@ const ProductScreen = () => {
         <ListGroup.Item>
           <Row>
             <Col>Price:</Col>
-            <Col><strong>${product.price.toFixed(2)}</strong></Col>
+            <Col><strong>${product.price?.toFixed(2)}</strong></Col>
           </Row>
         </ListGroup.Item>
         <ListGroup.Item>

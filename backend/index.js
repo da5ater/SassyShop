@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 const products = require('./data/products.js')
+const dotenv = require('dotenv')
+dotenv.config()
+const connectDB = require('./config/db.js');
+
+
+connectDB()
+
 
 app.use(express.json());
 
