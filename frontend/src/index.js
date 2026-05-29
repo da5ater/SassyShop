@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import  {
+import {
   createBrowserRouter,
   RouterProvider,
   Route,
-  createRoutesFromElements
+  createRoutesFromElements,
 } from 'react-router-dom';
 import App from './App';
 import HomeScreen from './screens/HomeScreen';
@@ -14,15 +14,14 @@ import ProductScreen from './screens/ProductScreen';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />} >
-    <Route index={true}   element={<HomeScreen />} /> 
-    <Route path='/cart' element={<h1>Cart Screen</h1>} />
-    <Route path='/login' element={<h1>Login Screen</h1>} />
-    <Route path='/product/:id' element={<ProductScreen />} />
+    <Route path="/" element={<App />}>
+      <Route index={true} element={<HomeScreen />} />
+      <Route path="/cart" element={<h1>Cart Screen</h1>} />
+      <Route path="/login" element={<h1>Login Screen</h1>} />
+      <Route path="/product/:id" element={<ProductScreen />} />
     </Route>
   )
 );
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

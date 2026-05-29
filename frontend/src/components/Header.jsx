@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
-import {FaShoppingCart , FaUser} from 'react-icons/fa'
-import logo from '../assets/logo.png'
+import { FaShoppingCart, FaUser } from 'react-icons/fa';
+import logo from '../assets/logo.png';
 import { LinkContainer } from 'react-router-bootstrap';
 
 function Header() {
@@ -10,7 +10,7 @@ function Header() {
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>
-            <img src={logo} alt="Sassy Shop" style={{ height: '40px' }} className='' /> 
+            <img src={logo} alt="Sassy Shop" style={{ height: '40px' }} className="" />
             <span className="ms-2">Sassy Shop</span>
           </Navbar.Brand>
         </LinkContainer>
@@ -18,17 +18,22 @@ function Header() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <LinkContainer to="/cart">
-              <Nav.Link> <FaShoppingCart /> Cart </Nav.Link>
+              <Nav.Link>
+                {' '}
+                <FaShoppingCart /> Cart{' '}
+              </Nav.Link>
             </LinkContainer>
             <LinkContainer to="/login">
-              <Nav.Link> <FaUser /> Login </Nav.Link>
+              <Nav.Link>
+                {' '}
+                <FaUser /> Login{' '}
+              </Nav.Link>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  )
+  );
 }
 
-
-export default Header
+export default Header;
