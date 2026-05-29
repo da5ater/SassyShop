@@ -13,7 +13,7 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: 'combined.log' }),
     new winston.transports.MongoDB({
       level: 'error',
-      db: process.env.MongoDB_URL,
+      db: process.env.MongoDB_URL || process.env.MONGODB_URL,
       options: { useUnifiedTopology: true },
       collection: 'logs',
       format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
