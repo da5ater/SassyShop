@@ -1,21 +1,22 @@
-import React from 'react';
+
 import { Link, useParams } from 'react-router-dom';
 import { Card, Col, ListGroup, Row } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useGetProductByIdQuery } from '../slices/productApiSlice';
+import Loader from '../components/Loader';
+import { toast } from 'react-toastify';
+
 
 const ProductScreen = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const { data: product, isLoading, error } = useGetProductByIdQuery(id);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const { data } = await axios.get(`/api/products/${id}`);
-      setProduct(data);
-    };
+  if (isLoading) {
+    return <Loader />;
+  }
 
-    fetchProduct();
-  }, [id]);
+  if (error) {
+    return toast.error(error?.data?.message || error.error);
+  }
 
   return (
     <>

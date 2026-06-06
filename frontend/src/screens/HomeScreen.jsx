@@ -1,30 +1,31 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useGetProductsQuery } from '../slices/productApiSlice';
+import Loader from '../components/Loader';
+import { toast } from 'react-toastify';
+
 
 function HomeScreen() {
-  const [products, setProducts] = useState([]);
+  const { data: products, isLoading, error } = useGetProductsQuery();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products');
-      setProducts(data);
-    };
-
-    fetchProducts();
-  }, []);
+  if (error) {
+    return toast.error(error?.data?.message || error.error);
+  }
 
   return (
     <div>
-      <h1>Products</h1>
+      <h1>Latest Products</h1>
       <Row>
-        {products.map((product) => (
-          <Col key={product._id} sm={12} md={6} lg={4}>
-            <Product product={product} />
-          </Col>
-        ))}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          products.map((product) => (
+            <Col key={product._id} sm={12} md={6} lg={4}>
+              <Product product={product} />
+            </Col>
+          ))
+        )}
       </Row>
     </div>
   );

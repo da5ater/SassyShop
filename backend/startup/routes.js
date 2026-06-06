@@ -11,8 +11,6 @@ module.exports = function (app) {
 
   app.use('/api/products', productRoute);
 
-  const { notFound, errorHandler } = require('../middleware/ErrorMiddleware.js');
-
   app.use(notFound);
   app.use(errorHandler);
 };
