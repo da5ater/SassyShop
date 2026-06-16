@@ -1,6 +1,7 @@
 const express = require('express');
 const productRoute = require('../routes/productsRoute.js');
 const { notFound, errorHandler } = require('../middleware/ErrorMiddleware.js');
+const userRoutes = require('../routes/userRoutes.js');
 
 module.exports = function (app) {
   app.use(express.json());
@@ -10,6 +11,7 @@ module.exports = function (app) {
   });
 
   app.use('/api/products', productRoute);
+  app.use('/api/users', userRoutes);
 
   app.use(notFound);
   app.use(errorHandler);
