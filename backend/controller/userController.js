@@ -4,18 +4,18 @@ const logger = require('../utils/logger');
 const generateToken = require('../utils/generateToken');
 
 // @desc    Auth user / set token
-// @route   POST /api/users/auth
+// @route   POST /api/users/login
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
+        generateToken(user._id, res);
         res.json({
             _id: user._id,
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            token: generateToken(user._id),
         });
     } else {
         res.status(401);
@@ -35,12 +35,12 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error('User already exists');
     }
     const user = await User.create({ name, email, password });
+    generateToken(user._id, res);
     res.status(201).json({
         _id: user._id,
         name: user.name,
         email: user.email,
-        isAdmin: user.isAdmin,
-        token: generateToken(user._id),
+        isAdmin: user.isAdmin
     });
 });
 
@@ -48,6 +48,10 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/logout
 // @access  Private
 const logoutUser = asyncHandler(async (req, res) => {
+    res.cookie('jwt', '', {
+        httpOnly: true,
+        expires: new Date(0),
+    });
     res.json({ message: 'Logged out' });
 });
 
@@ -127,7 +131,7 @@ const getUserById = asyncHandler(async (req, res) => {
 const deleteUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
-        await user.remove();
+        await user.deleteOne();
         res.json({ message: 'User removed' });
     } else {
         res.status(404);
